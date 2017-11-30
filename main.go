@@ -20,7 +20,9 @@ func main() {
 	//getScrapeKompas()
 	//getScrapeDetik()
 	build()
+	// q()
 }
+
 
 func build() {
 	db, err := sql.Open("mysql", DB_USER+":"+DB_PASS+"@"+DB_PROTOCOL+"("+DB_HOST+":"+DB_PORT+")/"+DB_NAME+"?charset="+DB_CHARSET)
@@ -40,20 +42,72 @@ func build() {
 	rows, err := db.Query("select title from news")
 	check(err)
 	defer rows.Close()
+	var n = 2
+
+	// variable user
+	if in_array(n, stopword) {}
+	fixer.ReplaceAllString("a", "")
+
+
 	for rows.Next() {
 		err := rows.Scan(&title)
 		check(err)
 		//log.Println(title)
-		a := strings.Split(title, " ")
+		// a := strings.Split(title, " ")
 		//fl := 1
-		for k, val := range a {
-			fmt.Println(val)
+		fmt.Println("Judul: " + title + "\nHasil :")
+
+		var a 	= strings.Split(strings.ToLower(title), " ")
+		for i := 0; i < len(a); i++ {
+			if in_array(a[i], stopword) {
+				a = append(a[:i], a[i+1:]...)
+			}
+		}
+		var n = 2
+		var tmp = [1024]string{}
+		var j   = 0
+		var k   = 0
+		var q   = 0
+		var qq  = true
+		var gt  = ""
+		for i := 0; qq;  {
+			if k < n {
+				if j+1 < len(a) {
+					gt = " " + a[j+1]
+				} else {
+					gt = ""
+				}
+				if in_array(a[j] + gt, tmp) {	
+					
+				} else {
+					tmp[k] = a[j] + gt 
+					fmt.Println("-  " + tmp[k])
+				}
+				if q < n-2 {
+					q++
+				} else {
+					j++
+				}
+			}
+			i++
+			if j == len(a)-1 {
+				qq = false
+			}
+		}
+		fmt.Println("")
+		/*for k, val := range a {
+			// fmt.Println(val)
 			val := strings.ToLower(fixer.ReplaceAllString(val, ""))
 			if in_array(val, stopword) {
 				unset(a, k)
 			}
-		}
+		}*/
 	}
+	/*for i := 0; i < len(tmp); i++ {
+		if tmp[i] != "" {
+			fmt.Println(tmp[i])	
+		}
+	}*/
 	err = rows.Err()
 	check(err)
 }
