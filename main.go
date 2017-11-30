@@ -99,11 +99,11 @@ func sha1gen(text string) string {
 
 // DB
 const (
-	DB_HOST     = "192.168.10.10"
+	DB_HOST     = "localhost"
 	DB_PORT     = "3306"
 	DB_NAME     = "news"
-	DB_USER     = "homestead"
-	DB_PASS     = "secret"
+	DB_USER     = "ammar"
+	DB_PASS     = "858869123"
 	DB_CHARSET  = "utf8"
 	DB_PROTOCOL = "tcp"
 )
